@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: flask-app
+
+  template:
+    metadata:
+      labels:
+        app: flask-app
+
+    spec:
+      containers:
+        - name: flask-app
+          image: 575589967956.dkr.ecr.ap-south-1.amazonaws.com/flask-eks-rds:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: DB_HOST
+              value: "flask-eks-rds-db.cnmw8wismkw6.ap-south-1.rds.amazonaws.com"
+
+            - name: DB_USER
+              value: "admin"
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: flask-db-secret
+                  key: DB_PASSWORD
+
+            - name: DB_NAME
+              value: "flaskapp"
+
+            - name: DB_PORT
+              value: "3306"
