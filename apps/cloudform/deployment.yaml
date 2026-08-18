@@ -26,10 +26,16 @@ spec:
 
           env:
             - name: DB_HOST
-              value: "flask-eks-rds-db.cnmw8wismkw6.ap-south-1.rds.amazonaws.com"
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-db-config
+                  key: DB_HOST
 
             - name: DB_USER
-              value: "admin"
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-db-config
+                  key: DB_USER
 
             - name: DB_PASSWORD
               valueFrom:
@@ -38,7 +44,13 @@ spec:
                   key: DB_PASSWORD
 
             - name: DB_NAME
-              value: "flaskapp"
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-db-config
+                  key: DB_NAME
 
             - name: DB_PORT
-              value: "3306"
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-db-config
+                  key: DB_PORT

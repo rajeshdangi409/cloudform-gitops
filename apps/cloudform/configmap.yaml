@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-db-config
+  namespace: default
+data:
+  DB_HOST: "flask-eks-rds-db.cnmw8wismkw6.ap-south-1.rds.amazonaws.com"
+  DB_USER: "admin"
+  DB_NAME: "flaskapp"
+  DB_PORT: "3306"
